@@ -1,6 +1,6 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { StorageService } from './storage-service';
-import { Task, TaskCategory } from '../models/task.model';
+import { NewTask, Task, TaskCategory } from '../models/task.model';
 import { v4 as uuidv4 } from 'uuid';
 import { Logger } from '../decorators/logger.decorator';
 
@@ -69,7 +69,7 @@ export class TaskService {
    * @param task - Данные задачи без служебных полей
    * @returns Созданная задача
    */
-  addTask(task: Omit<Task, 'id' | 'completed' | 'createdAt'>): Task {
+  addTask(task: NewTask): Task {
     const newTask: Task = {
       ...task,
       id: uuidv4(),
