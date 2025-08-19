@@ -22,3 +22,5 @@ export interface Task {
 }
 
 export type NewTask = Omit<Task, 'id' | 'createdAt' | 'completed'>;
+
+export type TaskFilter = 'all' | TaskCategory;

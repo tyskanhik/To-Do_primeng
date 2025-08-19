@@ -1,10 +1,8 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { StorageService } from './storage-service';
-import { NewTask, Task, TaskCategory } from '../models/task.model';
+import { NewTask, Task, TaskCategory, TaskFilter } from '../models/task.model';
 import { v4 as uuidv4 } from 'uuid';
 import { Logger } from '../decorators/logger.decorator';
-
-type TaskFilter = 'all' | TaskCategory;
 
 interface State {
   tasks: Task[],
