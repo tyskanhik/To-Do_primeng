@@ -9,9 +9,9 @@ export class PriorityPipe implements PipeTransform {
 
   transform(value: TaskPriority): string {
     switch(value) {
-      case 'low': return 'низкий'
-      case 'medium': return 'средний'
-      case 'high': return 'высокий'
+      case TaskPriority.LOW: return 'низкий'
+      case TaskPriority.MEDIUM: return 'средний'
+      case TaskPriority.HIGHT: return 'высокий'
       default: return value
     }
   }
