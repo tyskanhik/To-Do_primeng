@@ -1,0 +1,114 @@
+<div class="header mb-4">
+  <h2 class="m-0">Список задач</h2>
+  <app-filter-select 
+    [selectedFilter]="currentFilter()"
+    (filterChange)="handleFilterChange($event)"
+  ></app-filter-select>
+
+  <button 
+    pButton 
+    class="p-button-success"
+    (click)="openNewTaskDialog()"
+  >
+    <i class="pi pi-plus" pButtonIcon></i>
+    <span pButtonLabel>Добавить задачу</span>
+  </button>
+</div>
+
+<p-table
+  [value]="tasks()"
+  [paginator]="true"
+  [rows]="7"
+  [tableStyle]="{ 'min-width': '75rem' }"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 4rem;">Статус</th>
+      @for (col of columns; track col.field) {
+        <th [pSortableColumn]="col.field">
+          {{ col.header }}
+        </th>
+      }
+      <th style="width: 8rem">Действия</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-task>
+    <tr [ngClass]="{ 'completed-task': task.completed }">
+      <td>
+        <p-checkbox 
+          [binary]="true" 
+          [ngModel]="task.completed"
+          (onChange)="toggleTaskStatus(task.id)"
+        ></p-checkbox>
+      </td>
+
+      <td>
+        <div class="font-bold">{{ task.title }}</div>
+      </td>
+
+      <td>
+        <p-tag
+          [value]="task.category"
+          [severity]="getCategorySeverity(task.category)"
+        ></p-tag>
+      </td>
+
+      <td>
+        <p-tag
+          [value]="task.priority | priority"
+          [severity]="getPrioritySeverity(task.priority)"
+        ></p-tag>
+      </td>
+
+      <td>
+        <div>{{ task.createdAt | date:'dd.MM.yyyy'}}</div>
+        <div class="text-sm text-color-secondary">
+            {{ task.createdAt | date:'HH:mm' }}
+        </div>
+      </td>
+      <td>
+          <div class="actions flex gap-2">
+            <button 
+              pButton 
+              icon="pi pi-pencil" 
+              class="p-button-rounded p-button-text p-button-sm"
+              pTooltip="Редактировать" 
+              tooltipPosition="top"
+              (click)="openEditTaskDialog(task)"
+            ></button>
+            
+            <button 
+              pButton 
+              icon="pi pi-trash" 
+              class="p-button-rounded p-button-text p-button-sm p-button-danger"
+              pTooltip="Удалить" 
+              tooltipPosition="top"
+              (click)="confirmDelete(task.id)"
+            ></button>
+          </div>
+        </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="columns.length + 2" class="empty-message">
+        <div class="empty-content flex flex-column align-items-center py-6">
+          <i class="pi pi-inbox text-6xl text-color-secondary mb-3"></i>
+          <p class="text-xl text-color-secondary mb-2">Задачи не найдены</p>
+          <button 
+            pButton 
+            label="Создать задачу" 
+            icon="pi pi-plus"
+            class="p-button-outlined"
+            (click)="openNewTaskDialog()"
+          ></button>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<app-task-dialog></app-task-dialog>
+<p-confirmDialog></p-confirmDialog>

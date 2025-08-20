@@ -1,59 +1,85 @@
-# Todo
+# To-Do List приложение на Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+Современное To-Do List приложение, разработанное с использованием Angular 20+ и PrimeNG для UI компонентов. Приложение позволяет управлять задачами: создавать, редактировать, удалять и отмечать как выполненные. Все данные сохраняются в локальном хранилище браузера.
 
-## Development server
+## 🚀 Особенности
 
-To start a local development server, run:
+*   **Реактивные формы** с валидацией.
+*   **Диалоговые окна** для создания и редактирования задач.
+*   **Локальное сохранение данных** с помощью Local Storage.
+*   **Фильтрация задач** по категориям.
 
-```bash
-ng serve
+## 🛠 Технологии
+
+*   **Angular 20+**
+*   **PrimeNG**
+*   **TypeScript**
+*   **RxJS**
+*   **Local Storage API**
+
+## 📦 Установка и запуск
+
+1.  **Клонируйте репизиторий:**
+    ```bash
+    git clone <https://github.com/tyskanhik/To-Do_primeng.git>
+    cd To-Do_primeng
+    ```
+
+2.  **Установите зависимости:**
+    ```bash
+    npm install
+    ```
+
+3.  **Запустите приложение:**
+    ```bash
+    ng serve
+    ```
+
+4.  **Откройте браузер** и перейдите по адресу `http://localhost:4200`.
+
+## 📁 Структура проекта
+
+### Модели данных
+
+Модели задач находятся в `src/app/core/models/task.model.ts`:
+
+```typescript
+export  const  TaskCategory  = {
+	STUDIES:  'Учеба',
+	WORK:  'Работа',
+	HOME:  'Дом'
+} as  const;
+export  type  TaskCategory  =  typeof  TaskCategory[keyof  typeof  TaskCategory];
+
+export  const  TaskPriority  = {
+	LOW:  'low',
+	MEDIUM:  'medium',
+	HIGHT:  'hight'
+} as  const;
+export  type  TaskPriority  =  typeof  TaskPriority[keyof  typeof  TaskPriority];
+
+export  interface  Task {
+	id:  string;
+	title:  string;
+	category:  TaskCategory;
+	priority:  TaskPriority;
+	completed:  boolean;
+	createdAt:  Date;
+}
+
+export  type  NewTask  =  Omit<Task, 'id'  |  'createdAt'  |  'completed'>;
+export  type  TaskFilter  =  'all'  |  TaskCategory;
 ```
+### Утилиты
+Кастомный тип  `ToFormControls`  для типизации реактивных форм
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+```typescript
+import { FormControl } from "@angular/forms";
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+export type ToFormControls<T> = {
+  [K in keyof T]: FormControl<T[K] | null>;
+};
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Сервисы
+**`TaskService`**  отвечает за управление задачами
+**storage-service** Данные автоматически сохраняются в **Local Storage** при каждом изменении и загружаются при инициализации приложения.
