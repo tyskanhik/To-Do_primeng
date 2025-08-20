@@ -1,0 +1,21 @@
+<p-dialog 
+  [header]="editingTask ? 'Редактировать задачу' : 'Новая задача'"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '600px', maxWidth: '90vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [breakpoints]="{ '960px': '80vw', '640px': '90vw' }"
+  (onHide)="onHide()"
+  class="task-dialog"
+>
+  @if (visible) {
+    <app-task-form
+      [task]="editingTask"
+      [submitText]="editingTask ? 'Сохранить' : 'Создать'"
+      [showCompletion]="!!editingTask"
+      (submitForm)="handleSubmit($event)"
+      (cancel)="close()"
+    ></app-task-form>
+  }
+</p-dialog>
