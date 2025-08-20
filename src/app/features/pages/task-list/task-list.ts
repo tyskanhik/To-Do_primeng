@@ -12,6 +12,7 @@ import { TagModule } from 'primeng/tag';
 import { PriorityPipe } from '../../../shared/pipes/priority-pipe';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TaskDialog } from "../../../shared/task-dialog/task-dialog";
 
 @Component({
   selector: 'app-task-list',
@@ -25,8 +26,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     Checkbox,
     TagModule,
     PriorityPipe,
-    ConfirmDialogModule
-  ],
+    ConfirmDialogModule,
+    TaskDialog
+],
   providers: [ConfirmationService],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss'
@@ -36,7 +38,7 @@ export class TaskList {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private confirmationService = inject(ConfirmationService);
-
+  @ViewChild(TaskDialog) taskDialog!: TaskDialog;
 
   tasks = this.taskService.filteredTasks;
   currentFilter = this.taskService.filter;
@@ -91,16 +93,11 @@ export class TaskList {
   }
 
   openNewTaskDialog() {
-    console.log('Открыть модалку для добавления');
-    this.taskService.addTask({
-      title: 'новая задача',
-      category: TaskCategory.HOME,
-      priority: TaskPriority.LOW
-    })
+    this.taskDialog.open();
   }
 
   openEditTaskDialog(task: Task) {
-    console.log('Открыть модалку для редактирования');
+    this.taskDialog.open(task);
   }
 
   confirmDelete(id: string) {
