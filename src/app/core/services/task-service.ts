@@ -61,7 +61,6 @@ export class TaskService {
     })
   }
   
-  @Logger()
   /**
    * Добавляет новую задачу
    * @param task - Данные задачи без служебных полей
@@ -83,15 +82,12 @@ export class TaskService {
     return newTask
   }
 
-  @Logger()
   /**
    * Обновляет задачу
    * @param id - id задачи
    * @param updates - Объект с обновлёнными полями
    */
   updateTask(id: string, updates: Partial<Task>): void {
-    let updatedTask: Task | undefined;
-    
     this.state.update(state => ({
       ...state,
       tasks: state.tasks.map(task => 
@@ -105,7 +101,6 @@ export class TaskService {
     }))
   }
 
-  @Logger()
   /**
    * Удаляет задачу
    * @param id - id задачи
@@ -117,7 +112,6 @@ export class TaskService {
     }))
   }
 
-  @Logger()
   /**
    * Переключает поле completed задачи
    * @param id - id задачи
@@ -133,7 +127,6 @@ export class TaskService {
     }))
   }
 
-  @Logger()
   setFilter(filter: TaskFilter): void {
     this.state.update(state => ({
       ...state,
