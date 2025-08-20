@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, ViewChild } from '@angular/core';
+import { Component, computed, effect, inject, viewChild, ViewChild } from '@angular/core';
 import { FilterSelect } from "../../../shared/filter-select/filter-select";
 import { TaskService } from '../../../core/services/task-service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +42,7 @@ export class TaskList {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private confirmationService = inject(ConfirmationService);
-  @ViewChild(TaskDialog) taskDialog!: TaskDialog;
+  taskDialog = viewChild.required(TaskDialog);
 
   tasks = this.taskService.filteredTasks;
   currentFilter = this.taskService.filter;
@@ -97,11 +97,11 @@ export class TaskList {
   }
 
   openNewTaskDialog() {
-    this.taskDialog.open();
+    this.taskDialog().open();
   }
 
   openEditTaskDialog(task: Task) {
-    this.taskDialog.open(task);
+    this.taskDialog().open(task);
   }
 
   confirmDelete(id: string) {
