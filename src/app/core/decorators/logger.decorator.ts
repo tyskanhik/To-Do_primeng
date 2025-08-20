@@ -1,12 +1,13 @@
 export function Logger() {
   return function (
-    _target: any,
+    //no-es-lint
+    _target: unknown,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
     const originalMethod = descriptor.value;
     
-    descriptor.value = function (...args: any[]) {
+    descriptor.value = function (...args: unknown[]) {
       console.log(`Метод ${propertyKey} вызван с аргументами:`, args);
       
       const result = originalMethod.apply(this, args);

@@ -1,8 +1,7 @@
-import { Component, effect, EventEmitter, input, Input, output, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { TaskCategory, TaskFilter } from '../../core/models/task.model';
-import { Logger } from '../../core/decorators/logger.decorator';
 
 @Component({
   selector: 'app-filter-select',

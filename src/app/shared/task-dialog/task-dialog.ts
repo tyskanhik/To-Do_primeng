@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, output, Output, ViewChild } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { TaskForm } from "../task-form/task-form";
 import { DialogModule } from 'primeng/dialog';
 import { TaskService } from '../../core/services/task-service';

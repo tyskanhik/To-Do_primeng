@@ -1,8 +1,8 @@
-import { Component, computed, effect, inject, viewChild, ViewChild } from '@angular/core';
+import { Component, computed, effect, inject, viewChild } from '@angular/core';
 import { FilterSelect } from "../../../shared/filter-select/filter-select";
 import { TaskService } from '../../../core/services/task-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task, TaskCategory, TaskFilter, TaskPriority } from '../../../core/models/task.model';
+import { Task, TaskCategory, TaskFilter } from '../../../core/models/task.model';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
