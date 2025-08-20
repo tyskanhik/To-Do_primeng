@@ -1,0 +1,133 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="task-form p-fluid grid gap-3 p-4 surface-card border-round shadow-2">
+  
+  <!-- Поле названия задачи -->
+  <div class="field col-12">
+    <div class="flex align-items-center gap-3 mb-2">
+      <label for="title" class="label text-900 font-medium flex-shrink-0" style="width: 120px;">
+        Название задачи
+      </label>
+      <div class="flex-1">
+        <span class="p-input-icon-left w-full">
+          <input 
+            type="text" 
+            pInputText 
+            id="title" 
+            formControlName="title" 
+            placeholder="Введите название задачи"
+            [ngClass]="{'p-invalid': titleControl?.invalid && titleControl?.touched}"
+            class="w-full"
+            autocomplete="off"
+            autofocus
+            style="padding-left: 2.5rem;"
+          />
+        </span>
+      </div>
+    </div>
+    
+    <!-- Контейнер для ошибок с фиксированной высотой -->
+    <div class="flex">
+      <div class="flex-shrink-0" style="width: 120px;"></div> <!-- Пустой элемент для выравнивания -->
+      <div class="flex-1 error-container" [class.has-error]="titleControl?.invalid && titleControl?.touched">
+        @if (titleControl?.invalid && titleControl?.touched) {
+          <small class="p-error block">
+            @if (titleControl?.errors?.['required']) {
+              <div class="flex align-items-center gap-1">
+                <i class="pr-5 pi pi-exclamation-circle text-sm"></i>
+                <span>Обязательное поле</span>
+              </div>
+            }
+            @if (titleControl?.errors?.['minlength']) {
+              <div class="flex align-items-center gap-1">
+                <i class="pr-5 pi pi-exclamation-circle text-sm"></i>
+                <span>Минимум {{ titleControl?.errors?.['minlength']?.requiredLength }} символа</span>
+              </div>
+            }
+          </small>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Категория -->
+  <div class="field col-12 md:col-6">
+    <div class="flex align-items-center gap-3 mb-2">
+      <label class="label text-900 font-medium flex-shrink-0" style="width: 120px;">
+        Категория
+      </label>
+      <div class="flex-1">
+        <p-selectButton
+          formControlName="category"
+          [options]="categoryOptions"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+          styleClass="category-buttons"
+        ></p-selectButton>
+      </div>
+    </div>
+  </div>
+
+  <!-- Приоритет -->
+  <div class="field col-12 md:col-6">
+    <div class="flex align-items-center gap-3 mb-2">
+      <label class="label text-900 font-medium flex-shrink-0" style="width: 120px;">
+        Приоритет
+      </label>
+      <div class="flex-1">
+        <p-selectButton
+          formControlName="priority"
+          [options]="priorityOptions"
+          optionLabel="label"
+          optionValue="value"
+          class="w-full"
+          styleClass="priority-buttons"
+        ></p-selectButton>
+      </div>
+    </div>
+  </div>
+
+  <!-- Статус выполнения (показывается только при showCompletion = true) -->
+  @if (showCompletion) {
+    <div class="field col-12">
+      <div class="flex align-items-center gap-3">
+        <div class="flex-shrink-0" style="width: 120px;"></div> <!-- Пустой элемент для выравнивания -->
+        <div class="flex-1 surface-100 p-3 border-round">
+          <div class="flex align-items-center">
+            <p-checkbox 
+              [binary]="true" 
+              formControlName="completed" 
+              inputId="completed"
+              class="mr-2"
+            ></p-checkbox>
+            <label for="completed" class="label-checkbox text-900 font-medium mb-0 cursor-pointer flex align-items-center">
+              Задача выполнена
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Разделитель -->
+  <div class="col-12 border-top-1 surface-border mt-2"></div>
+
+  <!-- Кнопки -->
+  <div class="field col-12 flex justify-content-end gap-2 pt-3">
+    <button 
+      pButton 
+      type="button" 
+      label="Отмена" 
+      class="p-button-outlined p-button-secondary"
+      (click)="cancel.emit()"
+      icon="pi pi-times"
+    ></button>
+    <button 
+      pButton 
+      type="submit" 
+      [label]="submitText" 
+      [disabled]="form.invalid"
+      icon="pi pi-check"
+      class="min-w-8rem"
+    ></button>
+  </div>
+</form>

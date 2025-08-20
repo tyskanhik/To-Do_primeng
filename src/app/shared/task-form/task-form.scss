@@ -1,0 +1,45 @@
+.task-form {
+  display: grid;
+  gap: 25px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  .label {
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+
+  .label-checkbox {
+    display: inline-block;
+    padding-left: 5px;
+  }
+
+  .field {
+    margin-bottom: 0;
+  }
+  
+  .error-container {
+    min-height: 24px;
+    height: 24px;
+    padding-top: 5px;
+    transition: all 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    
+    .pr-5 {
+      padding-right: 5px;
+    }
+
+    &.has-error {
+      opacity: 1;
+      visibility: visible;
+      height: auto;
+      min-height: 24px;
+    }
+    
+    small {
+      display: block;
+      line-height: 1.2;
+    }
+  }
+}
