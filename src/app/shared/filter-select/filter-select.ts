@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, effect, EventEmitter, input, Input, output, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { TaskCategory, TaskFilter } from '../../core/models/task.model';
@@ -12,8 +12,8 @@ import { Logger } from '../../core/decorators/logger.decorator';
   styleUrl: './filter-select.scss'
 })
 export class FilterSelect {
-  @Input() selectedFilter: TaskFilter = 'all';
-  @Output() filterChange = new EventEmitter<TaskFilter>();
+  selectedFilter = input<TaskFilter>('all');
+  filterChange = output<TaskFilter>();
 
   protected filters: { label: string, value: TaskFilter }[] = [
     { label: 'Все задачи', value: 'all' },
@@ -22,7 +22,7 @@ export class FilterSelect {
     { label: 'Дом', value: TaskCategory.HOME}
   ];
 
-  onFilterChange() {
-    this.filterChange.emit(this.selectedFilter)
+  onFilterChange(newFilter: TaskFilter) {
+    this.filterChange.emit(newFilter);
   }
 }

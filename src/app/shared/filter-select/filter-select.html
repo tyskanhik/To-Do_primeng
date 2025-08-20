@@ -1,7 +1,7 @@
 <p-select 
   [options]="filters" 
-  [(ngModel)]="selectedFilter" 
-  (onChange)="onFilterChange()"
+  [ngModel]="selectedFilter()"
+  (ngModelChange)="onFilterChange($event)"
   optionLabel="label"
   optionValue="value">
 </p-select>
