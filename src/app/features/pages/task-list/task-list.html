@@ -50,14 +50,14 @@
       <td>
         <p-tag
           [value]="task.category"
-          [severity]="getCategorySeverity(task.category)"
+          [severity]="task.category | categorySeverity"
         ></p-tag>
       </td>
 
       <td>
         <p-tag
           [value]="task.priority | priority"
-          [severity]="getPrioritySeverity(task.priority)"
+          [severity]="task.priority | prioritySeverity"
         ></p-tag>
       </td>
 
