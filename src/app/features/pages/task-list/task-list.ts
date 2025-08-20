@@ -1,8 +1,8 @@
-import { Component, computed, effect, inject, ViewChild } from '@angular/core';
+import { Component, computed, effect, inject, viewChild } from '@angular/core';
 import { FilterSelect } from "../../../shared/filter-select/filter-select";
 import { TaskService } from '../../../core/services/task-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Task, TaskCategory, TaskFilter, TaskPriority } from '../../../core/models/task.model';
+import { Task, TaskCategory, TaskFilter } from '../../../core/models/task.model';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,8 @@ import { PriorityPipe } from '../../../shared/pipes/priority-pipe';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TaskDialog } from "../../../shared/task-dialog/task-dialog";
+import { CategorySeverityPipe } from '../../../shared/pipes/categorySeverity-pipe';
+import { PrioritySeverityPipe } from '../../../shared/pipes/prioritySeverity-pipe';
 
 @Component({
   selector: 'app-task-list',
@@ -27,7 +29,9 @@ import { TaskDialog } from "../../../shared/task-dialog/task-dialog";
     TagModule,
     PriorityPipe,
     ConfirmDialogModule,
-    TaskDialog
+    TaskDialog,
+    CategorySeverityPipe,
+    PrioritySeverityPipe
 ],
   providers: [ConfirmationService],
   templateUrl: './task-list.html',
@@ -38,7 +42,7 @@ export class TaskList {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private confirmationService = inject(ConfirmationService);
-  @ViewChild(TaskDialog) taskDialog!: TaskDialog;
+  taskDialog = viewChild.required(TaskDialog);
 
   tasks = this.taskService.filteredTasks;
   currentFilter = this.taskService.filter;
@@ -93,11 +97,11 @@ export class TaskList {
   }
 
   openNewTaskDialog() {
-    this.taskDialog.open();
+    this.taskDialog().open();
   }
 
   openEditTaskDialog(task: Task) {
-    this.taskDialog.open(task);
+    this.taskDialog().open(task);
   }
 
   confirmDelete(id: string) {
@@ -111,23 +115,5 @@ export class TaskList {
         this.taskService.deleteTask(id);
       }
     });
-  }
-
-  getCategorySeverity(category: TaskCategory) {
-    switch (category) {
-      case TaskCategory.WORK: return 'info';
-      case TaskCategory.STUDIES: return 'help';
-      case TaskCategory.HOME: return 'success';
-      default: return 'primary';
-    }
-  }
-
-  getPrioritySeverity(priority: TaskPriority) {
-    switch (priority) {
-      case TaskPriority.HIGHT: return 'danger';
-      case TaskPriority.MEDIUM: return 'warning';
-      case TaskPriority.LOW: return 'success';
-      default: return 'primary';
-    }
   }
 }

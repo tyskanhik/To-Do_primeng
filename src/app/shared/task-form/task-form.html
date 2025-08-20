@@ -17,7 +17,6 @@
             [ngClass]="{'p-invalid': titleControl?.invalid && titleControl?.touched}"
             class="w-full"
             autocomplete="off"
-            autofocus
             style="padding-left: 2.5rem;"
           />
         </span>
@@ -87,7 +86,7 @@
   </div>
 
   <!-- Статус выполнения (показывается только при showCompletion = true) -->
-  @if (showCompletion) {
+  @if (showCompletion()) {
     <div class="field col-12">
       <div class="flex align-items-center gap-3">
         <div class="flex-shrink-0" style="width: 120px;"></div> <!-- Пустой элемент для выравнивания -->
@@ -118,16 +117,16 @@
       type="button" 
       label="Отмена" 
       class="p-button-outlined p-button-secondary"
-      (click)="cancel.emit()"
+      (click)="cancelled.emit()"
       icon="pi pi-times"
-    ></button>
+    > </button>
     <button 
       pButton 
       type="submit" 
-      [label]="submitText" 
+      [label]="submitText()" 
       [disabled]="form.invalid"
       icon="pi pi-check"
       class="min-w-8rem"
-    ></button>
+    > </button>
   </div>
 </form>

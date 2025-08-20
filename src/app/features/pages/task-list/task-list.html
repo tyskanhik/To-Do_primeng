@@ -50,14 +50,14 @@
       <td>
         <p-tag
           [value]="task.category"
-          [severity]="getCategorySeverity(task.category)"
+          [severity]="task.category | categorySeverity"
         ></p-tag>
       </td>
 
       <td>
         <p-tag
           [value]="task.priority | priority"
-          [severity]="getPrioritySeverity(task.priority)"
+          [severity]="task.priority | prioritySeverity"
         ></p-tag>
       </td>
 
@@ -76,7 +76,7 @@
               pTooltip="Редактировать" 
               tooltipPosition="top"
               (click)="openEditTaskDialog(task)"
-            ></button>
+            > </button>
             
             <button 
               pButton 
@@ -85,7 +85,7 @@
               pTooltip="Удалить" 
               tooltipPosition="top"
               (click)="confirmDelete(task.id)"
-            ></button>
+            > </button>
           </div>
         </td>
     </tr>
@@ -103,7 +103,7 @@
             icon="pi pi-plus"
             class="p-button-outlined"
             (click)="openNewTaskDialog()"
-          ></button>
+          > </button>
         </div>
       </td>
     </tr>

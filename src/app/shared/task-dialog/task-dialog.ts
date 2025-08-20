@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { TaskForm } from "../task-form/task-form";
 import { DialogModule } from 'primeng/dialog';
 import { TaskService } from '../../core/services/task-service';
@@ -18,7 +18,7 @@ export class TaskDialog {
   visible = false;
   editingTask: Task | null = null;
 
-  @Output() dialogClosed = new EventEmitter<void>();
+  dialogClosed = output<void>();
 
   open(task?: Task): void {
     this.editingTask = task || null;

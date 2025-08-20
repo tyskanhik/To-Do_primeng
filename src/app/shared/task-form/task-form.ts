@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +16,7 @@ interface SelectOption {
   severity?: string;
 }
 
-interface ITaskForm extends ToFormControls<Omit<Task, 'id' | 'createdAt'>>{}
+type ITaskForm = ToFormControls<Omit<Task, 'id' | 'createdAt'>>
 
 @Component({
   selector: 'app-task-form',
@@ -33,17 +33,19 @@ interface ITaskForm extends ToFormControls<Omit<Task, 'id' | 'createdAt'>>{}
   styleUrl: './task-form.scss'
 })
 export class TaskForm {
-  @Input() set task(value: Task | null) {
-    if (value) {
-      this.form.patchValue(value)
-    }
+  task = input<Task | null>(null);
+  submitText = input('Создать');
+  showCompletion = input(false);
+
+  submitForm = output<Omit<Task, 'id' | 'createdAt'>>();
+  cancelled = output<void>();
+
+  constructor() {
+    effect(() => {
+      const taskValue = this.task();
+      if(taskValue) this.form.patchValue(taskValue);
+    })
   }
-
-  @Input() submitText = 'Создать';
-  @Input() showCompletion = false;
-
-  @Output() submitForm = new EventEmitter<Omit<Task, 'id' | 'createdAt'>>();
-  @Output() cancel = new EventEmitter<void>();
 
   form = new FormGroup<ITaskForm>({
     title: new FormControl('', [Validators.required, Validators.minLength(3)]),
