@@ -15,7 +15,7 @@
       [submitText]="editingTask ? 'Сохранить' : 'Создать'"
       [showCompletion]="!!editingTask"
       (submitForm)="handleSubmit($event)"
-      (cancel)="close()"
+      (cancelled)="close()"
     ></app-task-form>
   }
 </p-dialog>

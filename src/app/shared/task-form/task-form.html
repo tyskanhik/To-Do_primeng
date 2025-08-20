@@ -17,7 +17,6 @@
             [ngClass]="{'p-invalid': titleControl?.invalid && titleControl?.touched}"
             class="w-full"
             autocomplete="off"
-            autofocus
             style="padding-left: 2.5rem;"
           />
         </span>
@@ -118,9 +117,9 @@
       type="button" 
       label="Отмена" 
       class="p-button-outlined p-button-secondary"
-      (click)="cancel.emit()"
+      (click)="cancelled.emit()"
       icon="pi pi-times"
-    ></button>
+    > </button>
     <button 
       pButton 
       type="submit" 
@@ -128,6 +127,6 @@
       [disabled]="form.invalid"
       icon="pi pi-check"
       class="min-w-8rem"
-    ></button>
+    > </button>
   </div>
 </form>

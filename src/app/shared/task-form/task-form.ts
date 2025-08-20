@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, inject, input, Input, output, Output, signal } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +16,7 @@ interface SelectOption {
   severity?: string;
 }
 
-interface ITaskForm extends ToFormControls<Omit<Task, 'id' | 'createdAt'>>{}
+type ITaskForm = ToFormControls<Omit<Task, 'id' | 'createdAt'>>
 
 @Component({
   selector: 'app-task-form',
@@ -38,7 +38,7 @@ export class TaskForm {
   showCompletion = input(false);
 
   submitForm = output<Omit<Task, 'id' | 'createdAt'>>();
-  cancel = output<void>();
+  cancelled = output<void>();
 
   constructor() {
     effect(() => {
